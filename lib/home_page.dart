@@ -20,10 +20,9 @@ class _HomePageState extends State<HomePage> {
   TextEditingController _numberController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
-  FocusNode f1 = FocusNode();
-  FocusNode f2 = FocusNode();
-  FocusNode f3 = FocusNode();
-  FocusNode f4 = FocusNode();
+  final _nameFocus = FocusNode();
+  final _numberFocus = FocusNode();
+  final _passwordFocus = FocusNode();
 
   String? _selectedItem;
 
@@ -114,13 +113,10 @@ class _HomePageState extends State<HomePage> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       CustomFormField(
-                        focusNode: f1,
-                        onChanged: (newValue) {
-                          if (newValue.length == 8) {
-                            f1.unfocus();
-                            FocusScope.of(context).requestFocus(f2);
-                          }
+                        onFieldSubmitted: (_) {
+                          FocusScope.of(context).requestFocus(_numberFocus);
                         },
+                        focusNode: _nameFocus,
                         controller: _nameController,
                         labelText: 'Name',
                         hintText: 'Enter Your Name',
@@ -139,13 +135,10 @@ class _HomePageState extends State<HomePage> {
                         height: 5.0,
                       ),
                       CustomFormField(
-                        focusNode: f2,
-                        onChanged: (newValue) {
-                          if (newValue.length == 8) {
-                            f2.unfocus();
-                            FocusScope.of(context).requestFocus(f3);
-                          }
+                        onFieldSubmitted: (_) {
+                          FocusScope.of(context).requestFocus(_passwordFocus);
                         },
+                        focusNode: _numberFocus,
                         controller: _numberController,
                         labelText: 'Mobile Number',
                         hintText: 'Enter Your Mobile Number',
@@ -177,13 +170,7 @@ class _HomePageState extends State<HomePage> {
                         height: 10.0,
                       ),
                       CustomFormField(
-                        focusNode: f3,
-                        onChanged: (newValue) {
-                          if (newValue.length == 8) {
-                            f3.unfocus();
-                            FocusScope.of(context).requestFocus();
-                          }
-                        },
+                        focusNode: _passwordFocus,
                         controller: _passwordController,
                         labelText: 'Password',
                         hintText: 'Enter Your Password',
@@ -238,6 +225,9 @@ class _HomePageState extends State<HomePage> {
     _nameController.dispose();
     _numberController.dispose();
     _passwordController.dispose();
+    _nameFocus.dispose();
+    _numberFocus.dispose();
+    _passwordFocus.dispose();
 
     super.dispose();
   }

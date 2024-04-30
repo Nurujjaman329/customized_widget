@@ -6,8 +6,9 @@ class CustomFormField extends FormField<String> {
   final Icon? prefixicon;
   final Icon? suffixicon;
   final FocusNode? focusNode;
-  ValueChanged<String>? onChanged;
-  FormFieldValidator<String>? validator;
+  final ValueChanged<String>? onChanged;
+  final FormFieldValidator<String>? validator;
+  final ValueChanged<String>? onFieldSubmitted;
 
   final TextEditingController controller;
   final TextInputType? keyBoardType;
@@ -24,6 +25,7 @@ class CustomFormField extends FormField<String> {
     this.onChanged,
     FormFieldSetter<String>? onSaved,
     this.validator,
+    this.onFieldSubmitted,
     String? initialValue,
     bool autovalidate = false,
   }) : super(
@@ -40,6 +42,7 @@ class CustomFormField extends FormField<String> {
                 controller: controller,
                 focusNode: focusNode,
                 onChanged: onChanged,
+                onFieldSubmitted: onFieldSubmitted,
                 decoration: InputDecoration(
                   labelText: labelText,
                   hintText: hintText,
