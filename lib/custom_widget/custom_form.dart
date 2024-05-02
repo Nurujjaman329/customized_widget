@@ -1,33 +1,22 @@
 import 'package:flutter/material.dart';
 
 class CustomFormField extends FormField<String> {
-  final String labelText;
-  final String hintText;
-  final Icon? prefixicon;
-  final Icon? suffixicon;
-  final FocusNode? focusNode;
-  final ValueChanged<String>? onChanged;
-  final FormFieldValidator<String>? validator;
-  final ValueChanged<String>? onFieldSubmitted;
-
-  final TextEditingController controller;
-  final TextInputType? keyBoardType;
-
   CustomFormField({
     Key? key,
-    required this.labelText,
-    required this.hintText,
-    this.prefixicon,
-    this.suffixicon,
-    this.focusNode,
-    required this.controller,
-    this.keyBoardType,
-    this.onChanged,
     FormFieldSetter<String>? onSaved,
-    this.validator,
-    this.onFieldSubmitted,
+    FormFieldValidator<String>? validator,
+    String? labelText,
+    String? hintText,
+    Icon? prefixicon,
+    Icon? suffixicon,
+    FocusNode? focusNode,
+    //final ValueChanged<String>? onChanged;
+
+    final ValueChanged<String>? onFieldSubmitted,
+    final TextEditingController? controller,
+    final TextInputType? keyBoardType,
     String? initialValue,
-    bool autovalidate = false,
+    //bool autovalidate = false,
   }) : super(
           key: key,
           onSaved: onSaved,
@@ -39,9 +28,10 @@ class CustomFormField extends FormField<String> {
               padding: const EdgeInsets.only(bottom: 10.0),
               child: TextFormField(
                 keyboardType: keyBoardType,
+                validator: validator,
                 controller: controller,
                 focusNode: focusNode,
-                onChanged: onChanged,
+                onChanged: state.didChange,
                 onFieldSubmitted: onFieldSubmitted,
                 decoration: InputDecoration(
                   labelText: labelText,
@@ -68,62 +58,62 @@ class _CustomFormFieldState extends FormFieldState<String> {
   CustomFormField get widget => super.widget as CustomFormField;
 }
 
-InputDecoration formInputDecoration(String label, Icon? icon) {
-  return InputDecoration(
-    // Customize the appearance of the input field
-    border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(4.0),
-      borderSide: BorderSide(
-        color: Colors.grey,
-        width: 1.0,
-      ),
-    ),
-    focusedBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(4.0),
-      borderSide: const BorderSide(
-        color: Colors.blueAccent,
-        width: 1.0,
-      ),
-    ),
-    filled: true,
-    fillColor: Colors.white,
-    contentPadding:
-        const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
+//InputDecoration formInputDecoration(String label, Icon? icon) {
+//  return InputDecoration(
+//    // Customize the appearance of the input field
+//    border: OutlineInputBorder(
+//      borderRadius: BorderRadius.circular(4.0),
+//      borderSide: BorderSide(
+//        color: Colors.grey,
+//        width: 1.0,
+//      ),
+//    ),
+//    focusedBorder: OutlineInputBorder(
+//      borderRadius: BorderRadius.circular(4.0),
+//      borderSide: const BorderSide(
+//        color: Colors.blueAccent,
+//        width: 1.0,
+//      ),
+//    ),
+//    filled: true,
+//    fillColor: Colors.white,
+//    contentPadding:
+//        const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
 
-    // Customize the appearance of the label text
-    labelText: label,
-    labelStyle: const TextStyle(
-      color: Colors.black,
-      fontWeight: FontWeight.bold,
-      fontSize: 16.0,
-    ),
+//    // Customize the appearance of the label text
+//    labelText: label,
+//    labelStyle: const TextStyle(
+//      color: Colors.black,
+//      fontWeight: FontWeight.bold,
+//      fontSize: 16.0,
+//    ),
 
-    // Customize the appearance of the helper text
-    /*helperText: 'Custom Helper Text',
-    helperStyle: TextStyle(
-      color: Colors.grey,
-      fontSize: 14.0,
-    ),*/
+//    // Customize the appearance of the helper text
+//    /*helperText: 'Custom Helper Text',
+//    helperStyle: TextStyle(
+//      color: Colors.grey,
+//      fontSize: 14.0,
+//    ),*/
 
-    // Customize the appearance of the error text
-    /*errorText: 'Custom Error Text',
-    errorStyle: TextStyle(
-      color: Colors.red,
-      fontSize: 14.0,
-    ),*/
+//    // Customize the appearance of the error text
+//    /*errorText: 'Custom Error Text',
+//    errorStyle: TextStyle(
+//      color: Colors.red,
+//      fontSize: 14.0,
+//    ),*/
 
-    // Customize the appearance of the prefix icon
-    prefixIcon: icon,
-    prefixIconConstraints:
-        const BoxConstraints(minWidth: 40.0, minHeight: 40.0),
-    prefixIconColor: Colors.blue,
+//    // Customize the appearance of the prefix icon
+//    prefixIcon: icon,
+//    prefixIconConstraints:
+//        const BoxConstraints(minWidth: 40.0, minHeight: 40.0),
+//    prefixIconColor: Colors.blue,
 
-    // Customize the appearance of the suffix icon
-    /*suffixIcon: const Icon(Icons.clear),
-    suffixIconConstraints: const BoxConstraints(minWidth: 40.0, minHeight: 40.0),
-    suffixIconColor: Colors.red,*/
-  );
-}
+//    // Customize the appearance of the suffix icon
+//    /*suffixIcon: const Icon(Icons.clear),
+//    suffixIconConstraints: const BoxConstraints(minWidth: 40.0, minHeight: 40.0),
+//    suffixIconColor: Colors.red,*/
+//  );
+//}
 
 //class CustomFormTest extends StatefulWidget {
 //  const CustomFormTest({Key? key}) : super(key: key);

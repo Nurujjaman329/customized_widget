@@ -11,7 +11,22 @@ class CustomButton extends StatefulWidget {
 class _CustomButtonState extends State<CustomButton> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.blue,
+      ),
+      child: Text(widget.buttonName),
+    );
+  }
+}
+
+
+
+
+
+/*
+
+Container(
       height: MediaQuery.of(context).size.height * .07,
       width: MediaQuery.of(context).size.width * .80,
       decoration: BoxDecoration(
@@ -29,5 +44,4 @@ class _CustomButtonState extends State<CustomButton> {
         ),
       ),
     );
-  }
-}
+*/

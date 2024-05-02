@@ -16,23 +16,16 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _formKey = GlobalKey<FormState>();
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController _numberController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  //final TextEditingController _nameController = TextEditingController();
+  //final TextEditingController _numberController = TextEditingController();
+  //final TextEditingController _passwordController = TextEditingController();
 
   final _nameFocus = FocusNode();
   final _numberFocus = FocusNode();
   final _passwordFocus = FocusNode();
+  final _buttonFocus = FocusNode();
 
   String? _selectedItem;
-
-  @override
-  void initState() {
-    super.initState();
-    _nameController = TextEditingController();
-    _numberController = TextEditingController();
-    _passwordController = TextEditingController();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +48,7 @@ class _HomePageState extends State<HomePage> {
                   right: 40.0,
                 ),
                 child: CustomFormField(
-                  controller: _passwordController,
+                  //controller: _passwordController,
                   labelText: 'Password',
                   hintText: 'Enter Your Password',
                   prefixicon: Icon(Icons.man),
@@ -69,6 +62,7 @@ class _HomePageState extends State<HomePage> {
                   },
                 ),
               ),
+
               CustomButton(buttonName: 'Submit'),
               SizedBox(
                 height: 10.0,
@@ -105,32 +99,55 @@ class _HomePageState extends State<HomePage> {
               SizedBox(
                 height: 10.0,
               ),
+
+              // here start my validation code
               Padding(
                 padding: const EdgeInsets.all(40.0),
                 child: Form(
                   key: _formKey,
+                  //autovalidateMode: AutovalidateMode.always,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      CustomFormField(
-                        onFieldSubmitted: (_) {
-                          FocusScope.of(context).requestFocus(_numberFocus);
-                        },
-                        focusNode: _nameFocus,
-                        controller: _nameController,
-                        labelText: 'Name',
-                        hintText: 'Enter Your Name',
-                        keyBoardType: TextInputType.text,
-                        prefixicon: Icon(Icons.man),
-                        //autovalidate: true,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter text';
-                          }
-                          log(value.toString());
-                          return null;
-                        },
+                      //CustomFormField(
+                      //  onFieldSubmitted: (_) {
+                      //    FocusScope.of(context).requestFocus(_numberFocus);
+                      //  },
+                      //  focusNode: _nameFocus,
+                      //  controller: _nameController,
+                      //  labelText: 'Name',
+                      //  hintText: 'Enter Your Name',
+                      //  keyBoardType: TextInputType.text,
+                      //  prefixicon: Icon(Icons.man),
+                      //  //autovalidate: true,
+                      //  validator: (value) {
+                      //    if (value == null || value.isEmpty) {
+                      //      return 'Please enter text';
+                      //    }
+                      //    log(value.toString());
+                      //    return null;
+                      //  },
+                      //),
+                      SizedBox(
+                        height: 5.0,
                       ),
+
+                      //TextFormField(
+                      //  focusNode: _nameFocus,
+                      //  onFieldSubmitted: (_) {
+                      //    FocusScope.of(context).requestFocus(_numberFocus);
+                      //  },
+                      //  controller: _nameController,
+                      //  decoration:
+                      //      InputDecoration(border: OutlineInputBorder()),
+                      //  validator: (value) {
+                      //    log(value.toString());
+                      //    if (value == null || value.isEmpty) {
+                      //      return 'Please enter text';
+                      //    }
+                      //    return null;
+                      //  },
+                      //),
                       SizedBox(
                         height: 5.0,
                       ),
@@ -139,16 +156,16 @@ class _HomePageState extends State<HomePage> {
                           FocusScope.of(context).requestFocus(_passwordFocus);
                         },
                         focusNode: _numberFocus,
-                        controller: _numberController,
+                        //controller: _numberController,
                         labelText: 'Mobile Number',
                         hintText: 'Enter Your Mobile Number',
                         prefixicon: Icon(Icons.man),
                         keyBoardType: TextInputType.number,
                         validator: (value) {
+                          log('Number -> ' + value.toString());
                           if (value == null || value.isEmpty) {
                             return 'Please enter text';
                           }
-                          return null;
                         },
                       ),
                       SizedBox(
@@ -171,13 +188,17 @@ class _HomePageState extends State<HomePage> {
                       ),
                       CustomFormField(
                         focusNode: _passwordFocus,
-                        controller: _passwordController,
+                        //controller: _passwordController,
                         labelText: 'Password',
                         hintText: 'Enter Your Password',
                         prefixicon: Icon(Icons.man),
                         suffixicon: Icon(Icons.visibility),
                         keyBoardType: TextInputType.text,
+                        onFieldSubmitted: (_) {
+                          FocusScope.of(context).requestFocus(_buttonFocus);
+                        },
                         validator: (value) {
+                          log('Pass -> ' + value.toString());
                           if (value == null || value.isEmpty) {
                             return 'Please enter text';
                           }
@@ -185,8 +206,15 @@ class _HomePageState extends State<HomePage> {
                         },
                       ),
                       SizedBox(height: 20),
-                      InkWell(
-                        onTap: () {
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          shadowColor: Colors.blue,
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 99, vertical: 30),
+                        ),
+                        focusNode: _buttonFocus,
+                        onPressed: () {
+                          log('Clicked');
                           if (_formKey.currentState!.validate()) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
@@ -196,14 +224,31 @@ class _HomePageState extends State<HomePage> {
                             );
                           }
                         },
-                        child: CustomButton(
-                          buttonName: 'Form Submit',
-                        ),
+                        child: Text('Form Submit'),
                       ),
+                      //InkWell(
+                      //  onTap: () {
+                      //    _nameFocus.unfocus();
+                      //    _numberFocus.unfocus();
+                      //    _passwordFocus.unfocus();
+                      //    if (_formKey.currentState!.validate()) {
+                      //      ScaffoldMessenger.of(context).showSnackBar(
+                      //        SnackBar(
+                      //          content:
+                      //              Text('Form is valid, you can proceed.'),
+                      //        ),
+                      //      );
+                      //    }
+                      //  },
+                      //  child: CustomButton(
+                      //    buttonName: 'Form Submit',
+                      //  ),
+                      //),
                     ],
                   ),
                 ),
               ),
+              // here end my validation code
               SizedBox(
                 height: 10.0,
               ),
@@ -222,9 +267,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void dispose() {
-    _nameController.dispose();
-    _numberController.dispose();
-    _passwordController.dispose();
     _nameFocus.dispose();
     _numberFocus.dispose();
     _passwordFocus.dispose();
