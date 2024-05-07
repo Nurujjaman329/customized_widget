@@ -25,7 +25,7 @@ class _HomePageState extends State<HomePage> {
   final _passwordFocus = FocusNode();
   final _buttonFocus = FocusNode();
 
-  String? _selectedItem;
+  bool _passwordVisible = true;
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +52,16 @@ class _HomePageState extends State<HomePage> {
                   labelText: 'Password',
                   hintText: 'Enter Your Password',
                   prefixicon: Icon(Icons.man),
-                  suffixicon: Icon(Icons.visibility),
+                  obscureText: _passwordVisible,
+                  suffixIconButton: IconButton(
+                      icon: Icon(_passwordVisible
+                          ? Icons.visibility
+                          : Icons.visibility_off),
+                      onPressed: () {
+                        setState(() {
+                          _passwordVisible = !_passwordVisible;
+                        });
+                      }),
                   keyBoardType: TextInputType.text,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -192,7 +201,16 @@ class _HomePageState extends State<HomePage> {
                         labelText: 'Password',
                         hintText: 'Enter Your Password',
                         prefixicon: Icon(Icons.man),
-                        suffixicon: Icon(Icons.visibility),
+                        obscureText: _passwordVisible,
+                        suffixIconButton: IconButton(
+                            icon: Icon(_passwordVisible
+                                ? Icons.visibility
+                                : Icons.visibility_off),
+                            onPressed: () {
+                              setState(() {
+                                _passwordVisible = !_passwordVisible;
+                              });
+                            }),
                         keyBoardType: TextInputType.text,
                         onFieldSubmitted: (_) {
                           FocusScope.of(context).requestFocus(_buttonFocus);

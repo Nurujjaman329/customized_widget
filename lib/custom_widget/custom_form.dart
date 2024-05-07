@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CustomFormField extends FormField<String> {
   CustomFormField({
@@ -8,26 +9,28 @@ class CustomFormField extends FormField<String> {
     String? labelText,
     String? hintText,
     Icon? prefixicon,
-    Icon? suffixicon,
+    IconButton? suffixIconButton,
     FocusNode? focusNode,
-    //final ValueChanged<String>? onChanged;
-
+    final List<TextInputFormatter>? inputFormatters,
     final ValueChanged<String>? onFieldSubmitted,
     final TextEditingController? controller,
     final TextInputType? keyBoardType,
     String? initialValue,
-    //bool autovalidate = false,
+    bool obscureText = false,
   }) : super(
           key: key,
           onSaved: onSaved,
           validator: validator,
           initialValue: initialValue,
-          //autovalidate: autovalidate,
           builder: (FormFieldState<String> state) {
             return Padding(
-              padding: const EdgeInsets.only(bottom: 10.0),
+              padding: const EdgeInsets.only(
+                bottom: 10.0,
+              ),
               child: TextFormField(
+                inputFormatters: inputFormatters,
                 keyboardType: keyBoardType,
+                obscureText: obscureText,
                 validator: validator,
                 controller: controller,
                 focusNode: focusNode,
@@ -40,7 +43,7 @@ class CustomFormField extends FormField<String> {
                   prefixIconConstraints:
                       const BoxConstraints(minWidth: 40.0, minHeight: 40.0),
                   prefixIconColor: Colors.blue,
-                  suffixIcon: suffixicon,
+                  suffixIcon: suffixIconButton,
                   errorText: state.errorText,
                   border: OutlineInputBorder(),
                 ),
@@ -57,6 +60,7 @@ class _CustomFormFieldState extends FormFieldState<String> {
   @override
   CustomFormField get widget => super.widget as CustomFormField;
 }
+
 
 //InputDecoration formInputDecoration(String label, Icon? icon) {
 //  return InputDecoration(
